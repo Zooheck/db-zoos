@@ -82,6 +82,21 @@ server.put('/api/zoos/:id', async (req, res) => {
     res.status(500).json(err)
   }
 });
+
+server.delete('/api/zoos/:id', async (req, res) => {
+  try {
+    const count = await db('zoos')
+      .where({ id: req.params.id })
+      .del()
+    if (count > 0) {
+      res.status(204).end();
+    } else {
+      res.status(404).json({ message: 'Zoo not found' })
+    }
+  } catch (error) {
+    res.status(500).json(error)
+  }
+});
 const port = 3300;
 server.listen(port, function() {
   console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
