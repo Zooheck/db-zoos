@@ -108,6 +108,17 @@ server.get('/api/bears', async (req, res) => {
     res.status(500).json(err)
   }
 });
+
+server.get('/api/bears:id', async (req, res) => {
+  try {
+    const bear = await db('bears')
+    .where({id: req.params.id})
+    .first()
+    res.status(200).json(bear)
+  } catch (error) {
+    res.status(500).json(err)
+  }
+});
 const port = 3300;
 server.listen(port, function() {
   console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
